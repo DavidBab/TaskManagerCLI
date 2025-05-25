@@ -53,3 +53,4 @@ dkms.conf
 
 # The program files
 ./prog
+prog

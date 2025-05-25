@@ -1,6 +1,5 @@
 [1] Wending machine
-[2] Wash wending machine
 [3] Buy a car
-[4] Wasssuuup
-[5] Henlo Fren!
-[6] Help my dad mown the lawn
+[4] Help my dad mown the lawn
+[5] Paint car
+[6] Do the dishes
