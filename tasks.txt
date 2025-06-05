@@ -1,5 +1,2 @@
-[1] Wending machine
-[3] Buy a car
-[4] Help my dad mown the lawn
-[5] Paint car
-[6] Do the dishes
+[1] Example one
+[2] Example two
