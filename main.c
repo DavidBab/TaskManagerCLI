@@ -35,16 +35,27 @@ int main(int argc, char *argv[])
         {
             task.id = get_last_id("tasks.txt"); // Adding ID to task
             strcpy(task.name, argument);        // Setting task name
-            add_task("tasks.txt", task);
+            if (add_task("tasks.txt", task) == 0)
+            {
+                fprintf(stdout, "Added task: [%d] %s\n", task.id, task.name);
+            }
         }
-        else if (strcmp(command, "list") == 0)
+        else if (strcmp(command, "list") == 0 || strcmp(command, "ls") == 0)
         {
             fprintf(stdout, "List of tasks:\n");
             list_task("tasks.txt");
         }
-        else if (strcmp(command, "remove") == 0)
+        else if (strcmp(command, "remove") == 0 || strcmp(command, "rm") == 0)
         {
             remove_task("tasks.txt", argument);
+        }
+        else if (strcmp(command, "help") == 0)
+        {
+            fprintf(stdout, "Available commands:\n");
+            fprintf(stdout, "  add \"task name\"   - Add a new task\n");
+            fprintf(stdout, "  list              - List all tasks\n");
+            fprintf(stdout, "  remove \"id\"       - Remove a task by ID\n");
+            fprintf(stdout, "  exit              - Exit the program\n");
         }
     }
 
@@ -62,7 +73,6 @@ int add_task(char *file_name, struct Task task)
     }
 
     fprintf(f, "[%d] %s\n", task.id, task.name);
-    fprintf(stdout, "Added task: [%d] %s\n", task.id, task.name);
 
     fclose(f);
 
@@ -113,54 +123,56 @@ int list_task(char *file_name)
 
 int remove_task(char *file_name, char *task_id_str)
 {
-    FILE *f, *temp;
-    char buffer[BUFSIZE];
-    int current_id;
-    char task_name[BUFSIZE];
+    FILE *fw, *fr;
+    char buffer[BUFSIZE], argument[BUFSIZE];
+    int id, temp_id, new_id = 1;
+    int found = 0;
+    struct Task task;
 
-    // Convert the string to an integer safely
-    char *endptr;
-    int task_id = strtol(task_id_str, &endptr, 10);
-    if (*endptr != '\0')
+    if ((fr = fopen(file_name, "r")) == NULL)
     {
-        fprintf(stderr, "Invalid task ID: %s\n", task_id_str);
+        fprintf(stderr, "Error reading from %s\n", file_name);
         return 1;
     }
 
-    // Open the original file for reading
-    if ((f = fopen(file_name, "r")) == NULL)
+    if ((fw = fopen("temp", "w")) == NULL)
     {
-        fprintf(stderr, "Error opening file %s\n", file_name);
+        fprintf(stderr, "Error reading from %s\n", file_name);
         return 1;
     }
 
-    // Open a temporary file for writing
-    if ((temp = fopen("temp.txt", "w")) == NULL)
-    {
-        fprintf(stderr, "Error opening temporary file\n");
-        fclose(f);
-        return 1;
-    }
+    sscanf(task_id_str, "%d", &id);
 
-    // Process each line
-    while (fgets(buffer, sizeof(buffer), f))
+    while (fgets(buffer, sizeof(buffer), fr) != NULL)
     {
-        if (sscanf(buffer, "[%d] %[^\n]", &current_id, task_name) == 2)
+        if (sscanf(buffer, "[%d] %[^\n]", &temp_id, argument) == 2)
         {
-            if (current_id == task_id)
-                continue; // Skip the task to remove
-
-            // Write the remaining tasks with their original IDs
-            fprintf(temp, "[%d] %s\n", current_id, task_name);
+            if (temp_id == id)
+            {
+                found = 1;
+                continue;
+            }
+            fprintf(fw, "[%d] %s\n", new_id++, argument);
+        }
+        else
+        {
+            fprintf(fw, "%s", buffer);
         }
     }
 
-    fclose(f);
-    fclose(temp);
+    fclose(fr);
+    fclose(fw);
 
-    // Replace the original file with the updated file
+    if (!found)
+    {
+        fprintf(stderr, "Task with ID %d not found.\n", id);
+        remove("temp");
+        return 1;
+    }
+
     remove(file_name);
-    rename("temp.txt", file_name);
+    rename("temp", file_name);
 
+    fprintf(stdout, "Removed task with ID %d\n", id);
     return 0;
 }
