@@ -25,10 +25,14 @@ cd cli-task-manager-c
 ```
 
 Compile the program:
-`gcc task_manager.c -o task_manager`
+```
+gcc task_manager.c -o task_manager
+```
 
 Run the executable:
-`./task_manager`
+```
+./task_manager
+```
 
 Follow the on-screen prompts to add, view, or manage your tasks.
 
