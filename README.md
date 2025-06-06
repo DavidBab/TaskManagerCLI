@@ -43,9 +43,9 @@ Follow the on-screen prompts to add, view, or manage your tasks.
 ## 🗂️ File Structure  
 
 cli-task-manager-c/
-├── task_manager.c       # Main source code in C
-├── tasks.txt            # Text file storing tasks (created automatically)
-├── README.md            # Project documentation
+├── task_manager.c       # Main source code in C  
+├── tasks.txt            # Text file storing tasks (created automatically)  
+├── README.md            # Project documentation  
 
   
 ## 🔨 Future Improvements
