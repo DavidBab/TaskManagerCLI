@@ -2,6 +2,7 @@
 
 A simple and lightweight command-line task manager written in C. Manage your tasks easily from the terminal, with persistent storage using a plain text file.
 
+  
 ## 💡 Features
 
 Add new tasks to a text file.  
@@ -10,12 +11,14 @@ Delete tasks.
 Tasks are saved in a tasks.txt file to keep data between runs.  
 Minimal dependencies — just compile and run.  
 
+  
 ## 🚀 Getting Started
 
 **Requirements**
 A C compiler (e.g., gcc, clang).  
 Terminal/command line access.  
 
+  
 **How to Build & Run**
 
 Clone the repository:
@@ -36,6 +39,7 @@ Run the executable:
 
 Follow the on-screen prompts to add, view, or manage your tasks.
 
+  
 ## 🗂️ File Structure  
 
 cli-task-manager-c/
@@ -43,6 +47,7 @@ cli-task-manager-c/
 ├── tasks.txt            # Text file storing tasks (created automatically)
 ├── README.md            # Project documentation
 
+  
 ## 🔨 Future Improvements
 
 Add due dates and priority levels.  
@@ -50,6 +55,7 @@ Implement task search and filtering.
 Enhance UI with colors or menus.  
 Support task editing.  
 
+  
 ## 🤝 Contributing  
 
 Contributions and feedback are welcome! Feel free to fork the repo and submit pull requests.
